@@ -1,6 +1,6 @@
 if game.PlaceId == 6897167394 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Fs.lua"))()
-elseif game.PlaceId == 5130598377 then
+elseif game.PlaceId == 6846458508 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Au.lua"))()
 end
 
