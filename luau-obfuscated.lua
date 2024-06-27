@@ -2,6 +2,10 @@ if game.PlaceId == 6897167394 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Fs.lua"))()
 elseif game.PlaceId == 6846458508 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Au.lua"))()
+    elseif game.PlaceId == 17639412521 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Re.lua"))()
+else
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
 end
 
 local hi22 = Instance.new("Hint")
