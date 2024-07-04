@@ -1,5 +1,7 @@
 if game.PlaceId == 6897167394 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
+elseif game.PlaceId == 4520749081 then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/KL.lua"))()
 else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
 end
