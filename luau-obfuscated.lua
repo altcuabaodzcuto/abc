@@ -6,6 +6,15 @@ else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
 end
 
+--anti afk
+local VirtualUser = game:GetService("VirtualUser")
+local character = game.Players.LocalPlayer.Character
+
+game.Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
 local hi22 = Instance.new("Hint")
 hi22.Name = "hi22"
 hi22.Parent = game.CoreGui
