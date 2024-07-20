@@ -38,7 +38,7 @@ Tabs.Main:AddParagraph({
 })
 
 Tabs.Main:AddParagraph({
-    Title = "Game Supports: King Legacy",
+    Title = "Game Supports: MeMe Sea",
     Content = ""
 })
 
