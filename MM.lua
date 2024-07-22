@@ -456,14 +456,10 @@ spawn(function()
                     if v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
                         if game.Players.LocalPlayer.QuestFolder.QuestSlot1.Target.Value == Mon then
                             repeat task.wait()
+                                PosMonAngelWing = v.HumanoidRootPart.CFrame
                                 TP(v.HumanoidRootPart.CFrame * MethodFarm)
-                                Click()
-                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Humanoid.WalkSpeed = 0
-                                v.Head.CanCollide = false
-                                PosMon = v.HumanoidRootPart.CFrame
                                 EquipWeapon(WeaponFarm)
+                                Click()
                             until not _G.Settings.Main["AutoFarm"] or not v.Parent or v.Humanoid.Health <= 0
                         else
                                TP(game.Workspace.Location.QuestLocaion[Quest].CFrame)
@@ -537,12 +533,17 @@ spawn(function()
                     for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             if table.find(bossNames, v.Name) then
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                v.Humanoid:ChangeState(11)
+                                v.Humanoid.JumpPower = 0
+                                v.Humanoid.WalkSpeed = 0
+                                v.HumanoidRootPart.CanCollide = false
                                 monsterFound = true
                                 repeat task.wait()
-                                CFrameMon = v.HumanoidRootPart.CFrame
+                                    PosMonAngelWings = v.HumanoidRootPart.CFrame
                                     TP(v.HumanoidRootPart.CFrame * MethodFarm)
-                                    v.HumanoidRootPart.CanCollide = false
-				            		v.Head.CanCollide = false
                                     EquipWeapon(WeaponFarm)
                                     Click()
                                 until not _G.Settings.Boss["RaidFarm"] or not v.Parent or v.Humanoid.Health <= 0
@@ -553,7 +554,7 @@ spawn(function()
                     game:GetService("ReplicatedStorage").OtherEvent.MiscEvents.StartRaid:FireServer("Start")
                     end
                 else
-                    TP(CFrame.new(Vector3.new(2748, -58, -4523)))
+                    TP(CFrame.new(Vector3.new(2749,-58,-4524)))
                 end
             end)
         end
@@ -562,23 +563,27 @@ end)
 
 
 spawn(function()
-    while wait() do
+    game:GetService("RunService").Heartbeat:Connect(function()
         if _G.Settings.Config["BringMob"] and _G.Settings.Boss["RaidFarm"] then
             pcall(function()
                 for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
                         if table.find(bossNames, v.Name) then
-                            v.HumanoidRootPart.CFrame = CFrameMon
+                            v.HumanoidRootPart.CFrame = PosMonAngelWings
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            v.Humanoid:ChangeState(11)
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
                             v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                         end
                     end
                 end
             end)
         end
-    end
+    end)
 end)
 
 task.spawn(function()
@@ -593,31 +598,27 @@ task.spawn(function()
 end)
 
 spawn(function()
-    while wait() do
+    game:GetService("RunService").Heartbeat:Connect(function()
         if _G.Settings.Config["BringMob"] and _G.Settings.Main["AutoFarm"] then
             CheckLv()
             pcall(function()
                 for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
-                        if v.Name == Mon then
-                         v.Humanoid.WalkSpeed = 0
-						v.Humanoid.JumpPower = 0
-						v.HumanoidRootPart.CFrame = PosMon
-						v.HumanoidRootPart.CanCollide = false
-						v.Head.CanCollide = false
-						if v.Humanoid:FindFirstChild('Animator') then
-							v.Humanoid.Animator:Destroy()
-						end
-						v.Humanoid:ChangeState(11)
-						v.Humanoid:ChangeState(14)
-                        end
+                    if v.Name == Mon and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            v.HumanoidRootPart.CFrame = PosMonAngelWing
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                            v.Humanoid:ChangeState(11)
+                            v.Humanoid.JumpPower = 0
+                            v.Humanoid.WalkSpeed = 0
+                            v.HumanoidRootPart.CanCollide = false
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                     end
                 end
             end)
         end
-    end
+    end)
 end)
-
 
 spawn(function()
     while wait() do
