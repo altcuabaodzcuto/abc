@@ -261,7 +261,7 @@ end
 spawn(function()
     pcall(function()
         game:GetService("RunService").Stepped:Connect(function()
-            if _G.Settings.Main["AutoFarm"] or _G.Settings.Boss["AutoLordSus"] or _G.Settings.Main["AutoLava"] then
+            if _G.Settings.Main["AutoFarm"] or _G.Settings.Boss["AutoLordSus"] or _G.Settings.Main["AutoLava"] or _G.Settings.Boss["RaidFarm"] then
                 local character = game.Players.LocalPlayer.Character
                 if character and character:FindFirstChild("HumanoidRootPart") then
                     local humanoidRootPart = character.HumanoidRootPart
@@ -284,7 +284,7 @@ end)
 spawn(function()
     pcall(function()
         game:GetService("RunService").Stepped:Connect(function()
-            if _G.Settings.Main["AutoFarm"] or _G.Settings.Boss["AutoLordSus"] or _G.Settings.Main["AutoLava"] or _G.Settings.Boss["RaidKillAura"] or _G.Settings.Boss["RaidFarm"] then
+            if _G.Settings.Main["AutoFarm"] or _G.Settings.Boss["AutoLordSus"] or _G.Settings.Main["AutoLava"] or _G.Settings.Boss["RaidFarm"] then
                 for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
@@ -515,19 +515,44 @@ spawn(function()
     end
 end)
 
+local bossNames = {
+    "Super Popcat", "Tanky Moai", "Speedy Cheems", "Epic Doge",
+    "Floppa Man", "Maxwell The Cat", "The Stone", "Capybara",
+    "Killer Nugget", "Reverse Master"
+}
+
+
 spawn(function()
     while wait() do
         if _G.Settings.Boss["RaidFarm"] then
             pcall(function()
                 local found = false
-                for _, v in pairs(game.Workspace.Raids:GetDescendants()) do
-                    if v:FindFirstChild(game.Players.LocalPlayer.Name) then
+                for _, a in pairs(game.Workspace.Raids:GetDescendants()) do
+                    if a:FindFirstChild(game.Players.LocalPlayer.Name) then
                         found = true
-                            _G.AutoFarm = true
                     end
                 end
-                if not found then
-                        _G.AutoFarm = false
+                if found then
+                    local monsterFound = false
+                    for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if table.find(bossNames, v.Name) then
+                                monsterFound = true
+                                repeat task.wait()
+                                CFrameMon = v.HumanoidRootPart.CFrame
+                                    TP(v.HumanoidRootPart.CFrame * MethodFarm)
+                                    v.HumanoidRootPart.CanCollide = false
+				            		v.Head.CanCollide = false
+                                    EquipWeapon(WeaponFarm)
+                                    Click()
+                                until not _G.Settings.Boss["RaidFarm"] or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                    if not monsterFound then
+                    game:GetService("ReplicatedStorage").OtherEvent.MiscEvents.StartRaid:FireServer("Start")
+                    end
+                else
                     TP(CFrame.new(Vector3.new(2748, -58, -4523)))
                 end
             end)
@@ -538,40 +563,11 @@ end)
 
 spawn(function()
     while wait() do
-        if _G.AutoFarm then
-            pcall(function()
-                for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        if v.Name == "Super Popcat" or v.Name == "Tanky Moai"
-                            or v.Name == "Speedy Cheems" or v.Name == "Epic Doge"
-                            or v.Name == "Floppa Man" or v.Name == "Maxwell The Cat"
-                            or v.Name == "The Stone" or v.Name == "Capybara"
-                            or v.Name == "Killer Nugget" or v.Name == "Reverse Master" then
-                            repeat task.wait()
-                            CFrameMon = v.HumanoidRootPart.CFrame
-                                TP(v.HumanoidRootPart.CFrame * MethodFarm)
-                                Click()
-                                EquipWeapon(WeaponFarm)
-                            until not _G.AutoFarm or not v.Parent or v.Humanoid.Health <= 0
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
-
-spawn(function()
-    while wait() do
         if _G.Settings.Config["BringMob"] and _G.Settings.Boss["RaidFarm"] then
             pcall(function()
                 for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        if v.Name == "Super Popcat" or v.Name == "Tanky Moai"
-                            or v.Name == "Speedy Cheems" or v.Name == "Epic Doge"
-                            or v.Name == "Floppa Man" or v.Name == "Maxwell The Cat"
-                            or v.Name == "The Stone" or v.Name == "Capybara"
-                            or v.Name == "Killer Nugget" or v.Name == "Reverse Master" then
+                        if table.find(bossNames, v.Name) then
                             v.HumanoidRootPart.CFrame = CFrameMon
                             v.Humanoid.JumpPower = 0
                             v.Humanoid.WalkSpeed = 0
@@ -587,13 +583,11 @@ end)
 
 task.spawn(function()
     while true do wait()
-    if _G.Settings.Boss["BringRaid"] or _G.Settings.Config["BringMob"] then
         if setscriptable then
             setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
         end
         if sethiddenproperty then
             sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-        end
       end
     end
 end)
@@ -662,7 +656,7 @@ local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVa
 
 local Window = Fluent:CreateWindow({
     Title = "ELGATO HUB | ".. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.. " (First Sea)",
-    SubTitle = "| VERSION 1.0",
+    SubTitle = "| VERSION 1.1",
     TabWidth = 90,
     Size = UDim2.fromOffset(380, 280),
     Acrylic = false,
