@@ -566,7 +566,7 @@ spawn(function()
         if _G.Settings.Config["BringMob"] and _G.Settings.Boss["RaidFarm"] then
             pcall(function()
                 for _, v in pairs(game.Workspace.Monster:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+                    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                         if v.Name == "Super Popcat" or v.Name == "Tanky Moai"
                             or v.Name == "Speedy Cheems" or v.Name == "Epic Doge"
                             or v.Name == "Floppa Man" or v.Name == "Maxwell The Cat"
