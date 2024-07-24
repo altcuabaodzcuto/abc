@@ -14,7 +14,7 @@ end
 end
 
 local Links = 'LuaHub'
-local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
+local SavedKeyPath = "ELGATO HUB/SavedKeyLootLab.txt"
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
 local KeySystem = KeyLibrary.new(Links)
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/Library/retard/Fluent.lua"))()
