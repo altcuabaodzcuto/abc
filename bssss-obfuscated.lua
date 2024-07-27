@@ -1,7 +1,7 @@
+
 local function load()
  
  repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
- wait(1)
 
 if game.PlaceId == 6897167394 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
@@ -14,13 +14,13 @@ end
 end
 
 local Links = 'LuaHub'
-local SavedKeyPath = "ELGATO HUB/SavedKeyLootLab.txt"
+local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
 local KeySystem = KeyLibrary.new(Links)
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/Library/retard/Fluent.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "ELGATO HUB | KEY SYSTEM",
+    Title = "ELGATO HUB | LOOT LABS KEY SYSTEM",
     SubTitle = "by tvbcutodz",
     TabWidth = 65,
     Size = UDim2.fromOffset(299, 250),
@@ -148,7 +148,7 @@ hi22.Text = "by .tranvanbaodeptrai"
 
 spawn(function()
     local startTime = tick()
-    while wait(1) do
+    while task.wait() do
         pcall(function()
             local elapsedTime = tick() - startTime
             local hours = math.floor(elapsedTime / 3600)
