@@ -25,16 +25,6 @@ function Module.Main(tabela)
     -- StarterGui.Main.KeySys.UICorner
     G2L["3"] = Instance.new("UICorner", G2L["2"])
 
-    -- StarterGui.Main.KeySys.round frame
-    G2L["4"] = Instance.new("Frame", G2L["2"])
-    G2L["4"]["BorderSizePixel"] = 5
-    G2L["4"]["BackgroundColor3"] = Color3.fromRGB(23, 23, 30)
-    G2L["4"]["Size"] = UDim2.new(0, 600, 0, 212)
-    G2L["4"]["Position"] = UDim2.new(0, -120, 0, 150)
-    G2L["4"]["BorderColor3"] = Color3.fromRGB(51, 51, 51)
-    G2L["4"]["Name"] = [[round frame]]
-    G2L["4"]["Rotation"] = 40
-
     -- StarterGui.Main.KeySys.UIStroke
     G2L["5"] = Instance.new("UIStroke", G2L["2"])
     G2L["5"]["Color"] = Color3.fromRGB(255, 255, 255)
@@ -132,7 +122,6 @@ G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
     )
 
     while not PandaAuth:Authenticate_Keyless(ServiceID) do
-        wait(5)
         if PandaAuth:Authenticate_Keyless(ServiceID) then
             tabela.NormalScript()
             G2L["1"]:Destroy()
@@ -140,6 +129,7 @@ G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
         else
             G2L["a"]["Text"] = [[Invalid Key trying again in few seconds]]
         end
+        wait(5)
     end
  return G2l["1"], require;
 end
