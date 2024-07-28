@@ -1,3 +1,17 @@
+local function load()
+ 
+ repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+if game.PlaceId == 6897167394 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
+elseif game.PlaceId == 10260193230 then
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/MM.lua"))()
+else
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
+end
+
+end
+
 local Links = 'ElgatoHub'
 local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
