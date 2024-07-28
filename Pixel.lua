@@ -1,4 +1,5 @@
 
+
 Module = {}
 
 function Module.Main(tabela)
@@ -23,6 +24,16 @@ function Module.Main(tabela)
 
     -- StarterGui.Main.KeySys.UICorner
     G2L["3"] = Instance.new("UICorner", G2L["2"])
+
+    -- StarterGui.Main.KeySys.round frame
+    G2L["4"] = Instance.new("Frame", G2L["2"])
+    G2L["4"]["BorderSizePixel"] = 5
+    G2L["4"]["BackgroundColor3"] = Color3.fromRGB(23, 23, 30)
+    G2L["4"]["Size"] = UDim2.new(0, 600, 0, 212)
+    G2L["4"]["Position"] = UDim2.new(0, -120, 0, 150)
+    G2L["4"]["BorderColor3"] = Color3.fromRGB(51, 51, 51)
+    G2L["4"]["Name"] = [[round frame]]
+    G2L["4"]["Rotation"] = 40
 
     -- StarterGui.Main.KeySys.UIStroke
     G2L["5"] = Instance.new("UIStroke", G2L["2"])
@@ -53,19 +64,20 @@ function Module.Main(tabela)
     G2L["9"] = Instance.new("UICorner", G2L["8"])
 
     -- StarterGui.Main.KeySys.whitelist
-    G2L["a"] = Instance.new("TextLabel", G2L["2"])
-    G2L["a"]["BorderSizePixel"] = 2
-    G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-    G2L["a"]["TextSize"] = 20
-    G2L["a"]["FontFace"] =
-        Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-    G2L["a"]["TextColor3"] = Color3.fromRGB(201, 201, 201)
-    G2L["a"]["BackgroundTransparency"] = 0.9
-    G2L["a"]["Size"] = UDim2.new(0, 336, 0, 129)
-    G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
-    G2L["a"]["Text"] = [[Waiting for whitelist]]
-    G2L["a"]["Name"] = [[whitelist]]
-    G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
+G2L["a"] = Instance.new("TextBox", G2L["2"])
+G2L["a"]["BorderSizePixel"] = 2
+G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
+G2L["a"]["TextSize"] = 20
+G2L["a"]["FontFace"] =
+    Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["a"]["TextColor3"] = Color3.fromRGB(201, 201, 201)
+G2L["a"]["BackgroundTransparency"] = 0.9
+G2L["a"]["Size"] = UDim2.new(0, 336, 0, 129)
+G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["a"]["Text"] = "" -- Xóa văn bản mặc định
+G2L["a"]["PlaceholderText"] = "Nhập whitelist" -- Thêm văn bản gợi ý
+G2L["a"]["Name"] = "whitelist"
+G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
 
     -- StarterGui.Main.KeySys.whitelist.UIStroke
     G2L["b"] = Instance.new("UIStroke", G2L["a"])
