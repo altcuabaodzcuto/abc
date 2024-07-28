@@ -1,4 +1,3 @@
-
 local function load()
  
  repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -13,104 +12,64 @@ end
 
 end
 
-local Links = 'ElgatoHub'
-local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
-local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
-local KeySystem = KeyLibrary.new(Links)
+-- Import libraries
+local PandaAuth = loadstring(game:HttpGet("https://raw.githubusercontent.com/luableapi/main/main/panda.lua"))()
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/Library/retard/Fluent.lua"))()
 
+-- Define constants
+local ServiceID = "elgatohub"
+
+-- Create the main window
 local Window = Fluent:CreateWindow({
-    Title = "ELGATO HUB | LINKVERTISE KEY SYSTEM",
-    SubTitle = "by tvbcutodz",
+    Title = "ELGATO HUB | PELIDAN COMMUNITY KEY SYSTEM",
+    SubTitle = "VER 2.6",
     TabWidth = 65,
-    Size = UDim2.fromOffset(299, 250),
+    Size = UDim2.fromOffset(350, 250),
     Acrylic = false,
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.F15
 })
+
+-- Define tabs
 local Tabs = {
     Main = Window:AddTab({ Title = "Home", Icon = "rbxassetid://17542643869" }),
 }
 
-Tabs.Main:AddParagraph({
-    Title = "Game Supports: Fruit Seas",
-    Content = ""
-})
-
-Tabs.Main:AddParagraph({
-    Title = "Game Supports: MeMe Sea",
-    Content = ""
-})
-
+-- Define a notification function
 local function Notify(v)
-    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        Fluent:Notify({
-            Title = "Elgato Hub | ✅ Working",
-            Content = v,
-            Duration = 5
-        })
-    else
-        Fluent:Notify({
-            Title = "Elgato Hub | ❎ Working",
-            Content = v,
-            Duration = 5
-        })
-    end
+    Fluent:Notify({
+        Title = "ELGATO HUB",
+        Content = v,
+        Duration = 5
+    })
 end
 
-local function Notify1(v)
-        Fluent:Notify({
-            Title = "Elgato Hub",
-            Content = v,
-            Duration = 50
-        })
-end
+Tabs.Main:AddParagraph({
+    Title = "AUTO WHITELST",
+    Content = "SUPPORT ONLY WHITELIST"
+})
 
-local function isKeyValid(keyInput)
-    if keyInput then
-        local isKeyValid = KeySystem:verifyKey(keyInput)
-        if isKeyValid then
-            if writefile then
-                writefile(SavedKeyPath, keyInput)
-            end
-            Notify("✅ Valid Key!")
-            wait(1)
-            load()
-            return true
-        else
-            Notify("❎ Invalid Key!")
-        end
+Tabs.Main:AddButton({
+    Title = "GET LINK WHITELIST",
+    Description = "",
+    Callback = function()
+        setclipboard(PandaAuth:GetKey(ServiceID))
     end
-end
+})
 
-if readfile and writefile then
-    local success_file, error_file = pcall(function()
-        local is_key_present = isfile(SavedKeyPath);
-        if is_key_present == true then
-            Notify("Checking Key...")
-            local key_file_txt = readfile(SavedKeyPath)
-            local onl_key = isKeyValid(key_file_txt)
-            if onl_key then
-                Notify("✅ Save Key")
-            else
-                Notify("❎ Save Key")
-                delfile(SavedKeyPath)
-            end
-        end
-    end)
-    if error_file then
-        Notify(error_file)
-    end
-end
+Tabs.Main:AddParagraph({
+    Title = "PREMIUM KEY",
+    Content = "SUPPORT ONLY PREMIUM KEY"
+})
 
 Tabs.Main:AddInput("Input", {
-    Title = "",
+    Title = "KEY",
     Default = "",
-    Placeholder = "PUT YOUR KEY",
+    Placeholder = "BAOCUTO",
     Numeric = false,
     Finished = false,
     Callback = function(va)
-        keyTextbox = va
+        _G.Key = va
     end
 })
 
@@ -118,43 +77,26 @@ Tabs.Main:AddButton({
     Title = "CHECK KEY",
     Description = "",
     Callback = function()
-        isKeyValid(keyTextbox)
+        if PandaAuth:ValidatePremiumKey(ServiceID, _G.Key) then
+            load()
+            Notify("Authenticated")
+            print('Authenticated')
+        else
+            Notify("Not Authenticated")
+            warn('Not Authenticated')
+        end
     end
 })
 
-Tabs.Main:AddButton({
-    Title = "GET KEY",
-    Description = "",
-    Callback = function()
-        KeySystem:copyGetKeyURL()
-        Notify("Copy Success")
+while true do
+    if PandaAuth:Authenticate_Keyless(ServiceID) then
+        load()
+        Notify("Successfully Authorized")
+        print('Successfully Authorized')
+        break
+    else
+        Notify("Hardware ID not Successfully Authorized")
+        warn('Hardware ID not Successfully Authorized')
     end
-})
-
-
---anti afk
-local VirtualUser = game:GetService("VirtualUser")
-local character = game.Players.LocalPlayer.Character
-
-game.Players.LocalPlayer.Idled:Connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
-end)
-
-local hi22 = Instance.new("Hint")
-hi22.Name = "hi22"
-hi22.Parent = game.CoreGui
-hi22.Text = "by .tranvanbaodeptrai"
-
-spawn(function()
-    local startTime = tick()
-    while task.wait() do
-        pcall(function()
-            local elapsedTime = tick() - startTime
-            local hours = math.floor(elapsedTime / 3600)
-            local minutes = math.floor((elapsedTime % 3600) / 60)
-            local seconds = math.floor(elapsedTime % 60)
-            hi22.Text = "Time: ".. hours.. ":".. minutes.. ":".. seconds.. " | FPS: " .. math.floor(workspace:GetRealPhysicsFPS()).. " | Ping: " .. game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
-        end)
-    end
-end)
+    wait(5)
+end
