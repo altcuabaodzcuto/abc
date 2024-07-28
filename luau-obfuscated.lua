@@ -12,7 +12,7 @@ end
 
 end
 
-local KeySys = loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/Pixel.lua"))()
+local KeySys = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrypDeveloper/EZ-KeySystem/main/V2/EzKeySystem.lua"))()
 
 KeySys.Main({
   HubName = "Elgato Hub",
