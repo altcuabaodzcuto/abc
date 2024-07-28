@@ -1,4 +1,4 @@
-setclipboard(https://discord.gg/UrkE64Mfb7)
+setclipboard("https://discord.gg/UrkE64Mfb7")
 
 wait(1)
 
