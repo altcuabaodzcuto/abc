@@ -12,12 +12,9 @@ end
 
 end
 
--- Import libraries
+local ServiceID = "elgatohub"
 local PandaAuth = loadstring(game:HttpGet("https://raw.githubusercontent.com/luableapi/main/main/panda.lua"))()
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/Library/retard/Fluent.lua"))()
-
--- Define constants
-local ServiceID = "elgatohub"
 
 -- Create the main window
 local Window = Fluent:CreateWindow({
@@ -80,10 +77,8 @@ Tabs.Main:AddButton({
         if PandaAuth:ValidatePremiumKey(ServiceID, _G.Key) then
             load()
             Notify("Authenticated")
-            print('Authenticated')
         else
             Notify("Not Authenticated")
-            warn('Not Authenticated')
         end
     end
 })
@@ -92,11 +87,9 @@ while true do
     if PandaAuth:Authenticate_Keyless(ServiceID) then
         load()
         Notify("Successfully Authorized")
-        print('Successfully Authorized')
         break
     else
         Notify("Hardware ID not Successfully Authorized")
-        warn('Hardware ID not Successfully Authorized')
     end
     wait(5)
 end
