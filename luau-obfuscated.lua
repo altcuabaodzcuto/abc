@@ -34,7 +34,6 @@ local function isKeyValid(keyInput)
                 writefile(SavedKeyPath, keyInput)
             end
             Notify("VALID KEY!")
-            wait(1)
             load()
             return true
         else
