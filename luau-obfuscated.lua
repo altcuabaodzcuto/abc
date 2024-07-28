@@ -11,7 +11,7 @@ else
 end
 
 end
-
+local _G.YourPremiumKey = whitelist.Text
 local Links = 'ElgatoHub'
 local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
