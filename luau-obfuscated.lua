@@ -1,5 +1,4 @@
 local function load()
- game.CoreGui.Main:Destroy()
  repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 
 if game.PlaceId == 6897167394 then
