@@ -122,6 +122,7 @@ G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
     )
 
     while not PandaAuth:Authenticate_Keyless(ServiceID) do
+        wait(5)
         if PandaAuth:Authenticate_Keyless(ServiceID) then
             tabela.NormalScript()
             G2L["1"]:Destroy()
@@ -129,7 +130,6 @@ G2L["a"]["Position"] = UDim2.new(0.08, 0, 0.16942, 0)
         else
             G2L["a"]["Text"] = [[Invalid Key trying again in few seconds]]
         end
-        wait(5)
     end
  return G2l["1"], require;
 end
