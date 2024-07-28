@@ -1,16 +1,3 @@
-local function load()
- repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-
-if game.PlaceId == 6897167394 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
-elseif game.PlaceId == 10260193230 then
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/MM.lua"))()
-else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
-end
-
-end
-
 local Links = 'ElgatoHub'
 local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
@@ -42,34 +29,10 @@ local function isKeyValid(keyInput)
     end
 end
 
-if readfile and writefile then
-    local success_file, error_file = pcall(function()
-        local is_key_present = isfile(SavedKeyPath);
-
-        if is_key_present == true then
-            Notify("CHECKING SAVED KEY...")
-
-            local key_file_txt = readfile(SavedKeyPath)
-            local onl_key = isKeyValid(key_file_txt)
-
-            if onl_key then
-                Notify("VALID KEY!")
-            else
-                Notify("UNVALID KEY")
-                delfile(SavedKeyPath)
-            end
-        end
-    end)
-    if error_file then
-        Notify("FAILED TO CHECK SAVED KEY")
-        warn(error_file)
-    end
-end
-
 
 local Main = Instance.new("ScreenGui", gethui())
 Main.Name = "Main"
-Main.Parent = game.CoreGui
+Main.Partner = game.CoreGui
 Main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local KeySys = Instance.new("CanvasGroup", Main)
@@ -157,3 +120,27 @@ local loginUICorner = Instance.new("UICorner", login)
 
 local FrameUIStroke = Instance.new("UIStroke", Frame)
 FrameUIStroke.Color = Color3.fromRGB(255, 255, 255)
+
+if readfile and writefile then
+    local success_file, error_file = pcall(function()
+        local is_key_present = isfile(SavedKeyPath);
+
+        if is_key_present == true then
+            Notify("CHECKING SAVED KEY...")
+
+            local key_file_txt = readfile(SavedKeyPath)
+            local onl_key = isKeyValid(key_file_txt)
+
+            if onl_key then
+                Notify("VALID KEY!")
+            else
+                Notify("UNVALID KEY")
+                delfile(SavedKeyPath)
+            end
+        end
+    end)
+    if error_file then
+        Notify("FAILED TO CHECK SAVED KEY")
+        warn(error_file)
+    end
+end
