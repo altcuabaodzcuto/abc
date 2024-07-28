@@ -32,7 +32,7 @@ end
 
 local Main = Instance.new("ScreenGui", gethui())
 Main.Name = "Main"
-Main.Partner = game.CoreGui
+Main.Parent = game.CoreGui
 Main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local KeySys = Instance.new("CanvasGroup", Main)
