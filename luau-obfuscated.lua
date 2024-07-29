@@ -11,11 +11,15 @@ else
 end
 
 end
-local Links = 'ElgatoHub'
 local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
-local KeyLibrary = KeyLibrary or loadstring(game:HttpGet('https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/setup_obf.lua'))()
-local KeySystem = KeyLibrary.new(Links)
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local KeyLibrary = KeyLibrary or loadstring(game:HttpGet("https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/version2_2.lua"))()
+KeyLibrary.Set({
+    ApplicationName = "ElgatoHub", -- /getkey/(ApplicationName)
+    AuthType = "clientid", -- Can select verifycation with ClientId or IP ("clientid" or "ip")
+    TrueData = "true2", -- When key is valid
+    FalseData = "false1" -- When key is invalid
+})
 
 local function Notify(v)
     Fluent:Notify({
@@ -25,22 +29,22 @@ local function Notify(v)
     })
 end
 
+
 local function isKeyValid(keyInput)
-    if keyInput then
-        local isKeyValid = KeySystem:verifyKey(keyInput)
-        if isKeyValid then
-            if writefile then
-                writefile(SavedKeyPath, keyInput)
-            end
+    local o_data = KeyLibrary.VerifyKey(keyInput) or KeyLibrary.VerifyPremiumKey(keyInput) or KeyLibrary.VerifyDefaultKey(keyInput)
+
+    if o_data == "true2" then
+        if keyInput then
+            writefile(SavedKeyPath, keyInput)
             Notify("VALID KEY!")
             load()
-            return true
-        else
-            Notify("INVALID KEY!")
         end
+    elseif o_data == "false1" then
+        Notify("INVALID KEY!")
+    else
+        Notify("ERRORS KEY!")
     end
 end
-
 
 local Main = Instance.new("ScreenGui", gethui())
 Main.Name = "Main"
@@ -107,7 +111,7 @@ getkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
 getkey.Text = "GET KEY"
 getkey.Position = UDim2.new(0.1375, 0, 0.83, 0)
 getkey.MouseButton1Click:Connect(function()
-    KeySystem:copyGetKeyURL()
+    setclipboard(KeyLibrary.GetKey(ApplicationName))
     Notify("COPY SUCCESS")
 end)
 
@@ -125,6 +129,7 @@ login.Position = UDim2.new(0.51, 0, 0.83, 0)
 login.MouseButton1Click:Connect(function()
     isKeyValid(whitelist.Text)
 end)
+
 
 local getkeyUICorner = Instance.new("UICorner", getkey)
 
