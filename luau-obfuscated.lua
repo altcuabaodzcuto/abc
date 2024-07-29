@@ -1,55 +1,42 @@
+if not isfolder("ELGATO HUB") then
+    makefolder("ELGATO HUB")
+end
+
 local function load()
- 
- repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-
-if game.PlaceId == 6897167394 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
-elseif game.PlaceId == 10260193230 then
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/MM.lua"))()
-else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
-end
-
-end
-
-local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local KeyLibrary = KeyLibrary or loadstring(game:HttpGet("https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/version2_2.lua"))()
-KeyLibrary.Set({
-    ApplicationName = "ElgatoHub", -- /getkey/(ApplicationName)
-    AuthType = "clientid", -- Can select verifycation with ClientId or IP ("clientid" or "ip")
-    TrueData = "true2", -- When key is valid
-    FalseData = "false1" -- When key is invalid
-})
-
-local function Notify(v)
-    Fluent:Notify({
-        Title = "ELGATO HUB",
-        Content = v,
-        Duration = 5
-    })
-end
-
-local function isKeyValid(keyInput)
-    local o_data = KeyLibrary.VerifyKey(keyInput) or KeyLibrary.VerifyPremiumKey(keyInput) or KeyLibrary.VerifyDefaultKey(keyInput)
-
-    if o_data == "true2" then
-        if keyInput then
-            if writefile then
-            Notify("WRITE FILE...")
-                writefile(SavedKeyPath, keyInput)
-            end
-            Notify("VALID KEY!")
-            load()
-        end
-    elseif o_data == "false1" then
-        Notify("INVALID KEY!")
+    repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if game.PlaceId == 6897167394 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/FS.lua"))()
+    elseif game.PlaceId == 10260193230 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/altcuabaodzcuto/abc/main/MM.lua"))()
     else
-        Notify("ERRORS KEY!")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TranVanBao1411/ScriptLinhTinh/main/Scare.lua"))()
     end
 end
 
 
+local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
+local ServiceID = "elgatohub"
+local PandaAuth = loadstring(game:HttpGet('https://raw.githubusercontent.com/Panda-Repositories/PandaKS_Libraries/main/library/LuaLib/ROBLOX/PandaBetaLib.lua'))()
+
+local function Notify(va)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "ELGATO HUB",
+        Text = va,
+        Icon = "rbxassetid://18710056314",
+        Duration = 5
+    })
+end
+
+
+local function isKeyValid(keyInput)
+    if PandaAuth:ValidatePremiumKey(ServiceID, keyInput) or PandaAuth:ValidateKey(ServiceID, keyInput) then
+        Notify("AUTHENTICATED")
+        load()
+        writefile(SavedKeyPath, keyInput)
+    else
+        Notify("NOT AUTHENTICATED")
+    end
+end
 
 local Main = Instance.new("ScreenGui", gethui())
 Main.Name = "Main"
@@ -116,7 +103,7 @@ getkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
 getkey.Text = "GET KEY"
 getkey.Position = UDim2.new(0.1375, 0, 0.83, 0)
 getkey.MouseButton1Click:Connect(function()
-    setclipboard(KeyLibrary.GetKey(ApplicationName))
+    setclipboard(PandaAuth:GetKey(ServiceID))
     Notify("COPY SUCCESS")
 end)
 
@@ -137,22 +124,7 @@ end)
 local getkeyUICorner = Instance.new("UICorner", getkey)
 local loginUICorner = Instance.new("UICorner", login)
 
-
-if readfile and writefile then
-    local success_file, error_file = pcall(function()
-        local is_key_present = isfile(SavedKeyPath);
-        if is_key_present == true then
-            Notify("CHECKING SAVED KEY...")
-            local key_file_txt = readfile(SavedKeyPath)
-            local onl_key = isKeyValid(key_file_txt)
-            if onl_key then
-                Notify("VALID KEY!")
-            else
-                Notify("UNVALID KEY")
-            end
-        end
-    end)
-    if error_file then
-        Notify(error_file)
-    end
+if isfile(SavedKeyPath) then
+    Notify("CHECKING SAVED KEY...")
+    isKeyValid(readfile(SavedKeyPath))
 end
