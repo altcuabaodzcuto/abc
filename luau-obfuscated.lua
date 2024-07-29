@@ -11,6 +11,7 @@ else
 end
 
 end
+
 local SavedKeyPath = "ELGATO HUB/SavedKey.txt"
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local KeyLibrary = KeyLibrary or loadstring(game:HttpGet("https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/version2_2.lua"))()
@@ -29,13 +30,15 @@ local function Notify(v)
     })
 end
 
-
 local function isKeyValid(keyInput)
     local o_data = KeyLibrary.VerifyKey(keyInput) or KeyLibrary.VerifyPremiumKey(keyInput) or KeyLibrary.VerifyDefaultKey(keyInput)
 
     if o_data == "true2" then
         if keyInput then
-            writefile(SavedKeyPath, keyInput)
+            if writefile then
+            Notify("WRITE FILE...")
+                writefile(SavedKeyPath, keyInput)
+            end
             Notify("VALID KEY!")
             load()
         end
@@ -45,6 +48,8 @@ local function isKeyValid(keyInput)
         Notify("ERRORS KEY!")
     end
 end
+
+
 
 local Main = Instance.new("ScreenGui", gethui())
 Main.Name = "Main"
@@ -129,35 +134,25 @@ login.Position = UDim2.new(0.51, 0, 0.83, 0)
 login.MouseButton1Click:Connect(function()
     isKeyValid(whitelist.Text)
 end)
-
-
 local getkeyUICorner = Instance.new("UICorner", getkey)
-
 local loginUICorner = Instance.new("UICorner", login)
 
-local FrameUIStroke = Instance.new("UIStroke", Frame)
-FrameUIStroke.Color = Color3.fromRGB(255, 255, 255)
 
 if readfile and writefile then
     local success_file, error_file = pcall(function()
         local is_key_present = isfile(SavedKeyPath);
-
         if is_key_present == true then
             Notify("CHECKING SAVED KEY...")
-
             local key_file_txt = readfile(SavedKeyPath)
             local onl_key = isKeyValid(key_file_txt)
-
             if onl_key then
                 Notify("VALID KEY!")
             else
                 Notify("UNVALID KEY")
-                delfile(SavedKeyPath)
             end
         end
     end)
     if error_file then
-        Notify("FAILED TO CHECK SAVED KEY")
-        warn(error_file)
+        Notify(error_file)
     end
 end
