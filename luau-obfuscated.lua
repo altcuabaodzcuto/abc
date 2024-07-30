@@ -34,6 +34,7 @@ local function isKeyValid(keyInput)
         load()
         writefile(SavedKeyPath, keyInput)
     else
+        delfile(SavedKeyPath)
         Notify("NOT AUTHENTICATED")
     end
 end
@@ -128,3 +129,30 @@ if isfile(SavedKeyPath) then
     Notify("CHECKING SAVED KEY...")
     isKeyValid(readfile(SavedKeyPath))
 end
+
+--anti afk
+local VirtualUser = game:GetService("VirtualUser")
+local character = game.Players.LocalPlayer.Character
+
+game.Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
+local hi22 = Instance.new("Hint")
+hi22.Name = "hi22"
+hi22.Parent = game.CoreGui
+hi22.Text = "by .tranvanbaodeptrai"
+
+spawn(function()
+    local startTime = tick()
+    while task.wait() do
+        pcall(function()
+            local elapsedTime = tick() - startTime
+            local hours = math.floor(elapsedTime / 3600)
+            local minutes = math.floor((elapsedTime % 3600) / 60)
+            local seconds = math.floor(elapsedTime % 60)
+            hi22.Text = "Time: ".. hours.. ":".. minutes.. ":".. seconds.. " | FPS: " .. math.floor(workspace:GetRealPhysicsFPS()).. " | Ping: " .. game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        end)
+    end
+end)
