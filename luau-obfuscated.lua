@@ -34,7 +34,9 @@ local function isKeyValid(keyInput)
         load()
         writefile(SavedKeyPath, keyInput)
     else
+    if isfile(SavedKeyPath) then
         delfile(SavedKeyPath)
+        end
         Notify("NOT AUTHENTICATED")
     end
 end
