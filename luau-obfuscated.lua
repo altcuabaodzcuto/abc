@@ -1,6 +1,3 @@
-if not isfolder("ELGATO HUB") then
-    makefolder("ELGATO HUB")
-end
 
 local function load()
     repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -27,6 +24,12 @@ local function Notify(va)
     })
 end
 
+function File()
+    if not isfolder(SavedKeyPath) then
+        makefolder(SavedKeyPath)
+    end
+end
+
 
 local function isKeyValid(keyInput)
     if PandaAuth:ValidatePremiumKey(ServiceID, keyInput) or PandaAuth:ValidateKey(ServiceID, keyInput) then
@@ -34,8 +37,9 @@ local function isKeyValid(keyInput)
         load()
         writefile(SavedKeyPath, keyInput)
     else
-    if isfile(SavedKeyPath) then
-        delfile(SavedKeyPath)
+        if isfile(SavedKeyPath) then
+            File()
+            delfile(SavedKeyPath)
         end
         Notify("NOT AUTHENTICATED")
     end
@@ -129,7 +133,16 @@ local loginUICorner = Instance.new("UICorner", login)
 
 if isfile(SavedKeyPath) then
     Notify("CHECKING SAVED KEY...")
-    isKeyValid(readfile(SavedKeyPath))
+    local fileContent = readfile(SavedKeyPath)
+    if fileContent then
+        isKeyValid(fileContent)
+    else
+        -- Xử lý lỗi khi đọc file
+        Notify("ERROR: cannot read file")
+    end
+else
+    -- Xử lý lỗi khi file không tồn tại
+    Notify("ERROR: File not found")
 end
 
 --anti afk
