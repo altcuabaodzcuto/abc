@@ -16,12 +16,17 @@ local ServiceID = "elgatohub"
 local PandaAuth = loadstring(game:HttpGet('https://raw.githubusercontent.com/Panda-Repositories/PandaKS_Libraries/main/library/LuaLib/ROBLOX/PandaBetaLib.lua'))()
 
 local function Notify(va)
-    game.StarterGui:SetCore("SendNotification", {
+    local notification = game.StarterGui:SetCore("SendNotification", {
         Title = "ELGATO HUB",
         Text = va,
         Icon = "rbxassetid://18710056314",
-        Duration = 5
+        Duration = 5,
+        Button1 = "OKAY MR BEAT"
     })
+    
+    notification.Button1Click:Connect(function()
+        notification:Dismiss()
+    end)
 end
 
 function File()
@@ -104,11 +109,11 @@ getkey.TextSize = 20
 getkey.TextColor3 = Color3.fromRGB(255, 255, 255)
 getkey.BackgroundColor3 = Color3.fromRGB(101, 101, 121)
 getkey.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-getkey.Size = UDim2.new(0, 136, 0, 32)
+getkey.Size = UDim2.new(0, 130, 0, 32)
 getkey.Name = "getkey"
 getkey.BorderColor3 = Color3.fromRGB(0, 0, 0)
 getkey.Text = "GET KEY"
-getkey.Position = UDim2.new(0.1375, 0, 0.83, 0)
+--getkey.Position = UDim2.new(0.1375, 0, 0.83, 0)
 getkey.MouseButton1Click:Connect(function()
     setclipboard(PandaAuth:GetKey(ServiceID))
     Notify("COPY SUCCESS")
@@ -120,16 +125,38 @@ login.TextSize = 20
 login.TextColor3 = Color3.fromRGB(255, 255, 255)
 login.BackgroundColor3 = Color3.fromRGB(101, 101, 121)
 login.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-login.Size = UDim2.new(0, 136, 0, 32)
+login.Size = UDim2.new(0, 130, 0, 32)
 login.Name = "login"
 login.BorderColor3 = Color3.fromRGB(0, 0, 0)
 login.Text = "CHECK KEY"
-login.Position = UDim2.new(0.51, 0, 0.83, 0)
+--login.Position = UDim2.new(0.51, 0, 0.83, 0)
 login.MouseButton1Click:Connect(function()
     isKeyValid(whitelist.Text)
 end)
 local getkeyUICorner = Instance.new("UICorner", getkey)
 local loginUICorner = Instance.new("UICorner", login)
+
+local howToGetKey = Instance.new("TextButton", KeySys)
+howToGetKey.BorderSizePixel = 0
+howToGetKey.TextSize = 20
+howToGetKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+howToGetKey.BackgroundColor3 = Color3.fromRGB(101, 101, 121)
+howToGetKey.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+howToGetKey.Size = UDim2.new(0, 120, 0, 32)
+howToGetKey.Name = "howToGetKey"
+howToGetKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+howToGetKey.Text = "TUTORIAL"
+howToGetKey.MouseButton1Click:Connect(function()
+    setclipboard("https://youtu.be/_7pJAZkPE9U")
+    Notify("Paste it into your browser to view how to get key")
+end)
+
+local howToGetKeyUICorner = Instance.new("UICorner", howToGetKey)
+
+-- Cập nhật vị trí của các button
+getkey.Position = UDim2.new(0.01, 0, 0.83, 0)
+login.Position = UDim2.new(0.66, 0, 0.83, 0)
+howToGetKey.Position = UDim2.new(0.35, 0, 0.83, 0)
 
 if isfile(SavedKeyPath) then
     Notify("CHECKING SAVED KEY...")
@@ -137,12 +164,8 @@ if isfile(SavedKeyPath) then
     if fileContent then
         isKeyValid(fileContent)
     else
-        -- Xử lý lỗi khi đọc file
         Notify("ERROR: cannot read file")
     end
-else
-    -- Xử lý lỗi khi file không tồn tại
-    Notify("ERROR: File not found")
 end
 
 --anti afk
