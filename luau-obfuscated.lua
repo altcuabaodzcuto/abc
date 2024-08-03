@@ -16,13 +16,13 @@ local ServiceID = "elgatohub"
 local PandaAuth = loadstring(game:HttpGet('https://raw.githubusercontent.com/Panda-Repositories/PandaKS_Libraries/main/library/LuaLib/ROBLOX/PandaBetaLib.lua'))()
 
 local function Notify(va)
-    local notification = game.StarterGui:SetCore("SendNotification", {
-        Title = "ELGATO HUB",
+    game.StarterGui:SetCore("SendNotification", {
+                Title = "ELGATO HUB",
         Text = va,
         Icon = "rbxassetid://18710056314",
         Duration = 5,
         Button1 = "OKAY MR BEAT"
-    })
+            })
     end 
 
 function File()
