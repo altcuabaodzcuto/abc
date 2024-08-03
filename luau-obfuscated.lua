@@ -23,11 +23,7 @@ local function Notify(va)
         Duration = 5,
         Button1 = "OKAY MR BEAT"
     })
-    
-    notification.Button1Click:Connect(function()
-        notification:Dismiss()
-    end)
-end
+    end 
 
 function File()
     if not isfolder(SavedKeyPath) then
